@@ -1,16 +1,26 @@
 const board = document.getElementById('board')
 const colors = ['#54365b', '#2a63a0', '#0fcced', '#5f6c0f', '#cb7097', '#0580fe', '#d94eb4', '#86671e', '#45edfd', '#1c877a']
-const SQUARES_NUMBER = 500
+let SQUARES_NUMBER = ''
 
-for(let i = 0; i< SQUARES_NUMBER; i++){
-    const square = document.createElement('div')
-    square.classList.add('square')
-
-    square.addEventListener('mouseover', ()=>setColor(square))
-    square.addEventListener('mouseleave', ()=>removeColor(square))
-
-    board.append(square)
+function start() {
+    SQUARES_NUMBER = prompt('Enter any number')
+    while(SQUARES_NUMBER ==''){
+        SQUARES_NUMBER = prompt('Enter any number')
+    }
+    setMaxWidth()
+    for(let i = 0; i< SQUARES_NUMBER; i++){
+        const square = document.createElement('div')
+        square.classList.add('square')
+    
+        square.addEventListener('mouseover', ()=>setColor(square))
+        square.addEventListener('mouseleave', ()=>removeColor(square))
+    
+        board.append(square)
+    }
 }
+
+window.onload = start()
+
 
 function setColor(element){
     const color = getRandomColor()
@@ -24,7 +34,19 @@ function removeColor(element){
 
 }
 
+function setMaxWidth(){
+    const container = document.querySelector('.container')
+    if(SQUARES_NUMBER <=500){
+    container.style.maxWidth = `${SQUARES_NUMBER*1.6}px`
+    } else if (SQUARES_NUMBER <=1500) {
+        container.style.maxWidth = `${SQUARES_NUMBER*.5}px`
+    } else {
+        container.style.maxWidth = '400px'
+    }
+}
+
 function getRandomColor(){
     const index = Math.floor(Math.random() * colors.length)
     return colors[index]
 }
+
